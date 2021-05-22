@@ -2,16 +2,23 @@ import 'package:ecommercefirebase/constants.dart';
 import 'package:ecommercefirebase/screens/signup_screen.dart';
 import 'package:ecommercefirebase/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:ecommercefirebase/services/auth.dart';
 
 class LoginScreen extends StatelessWidget {
   static String id = 'LoginScreen';
+  String _email, _password;
+  final _auth = Auth();
+  final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor: kMainColor,
-        body: ListView(
+      backgroundColor: kMainColor,
+      body: Form(
+        key: _globalKey,
+        child: ListView(
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(top: 50.0),
@@ -37,23 +44,46 @@ class LoginScreen extends StatelessWidget {
             ),
             SizedBox(height: height * .1),
             CustomTextField(
+              onClick: (value) {
+                _email = value;
+              },
               hint: 'Enter your email',
               icon: Icons.email,
             ),
             SizedBox(height: height * .02),
             CustomTextField(
+              onClick: (value) {
+                _password = value;
+              },
               hint: 'Enter your password',
               icon: Icons.lock,
             ),
             SizedBox(height: height * .05),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 120),
-              child: MaterialButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0)),
-                color: Colors.black,
-                onPressed: () {},
-                child: Text('Login', style: TextStyle(color: Colors.white)),
+              child: Builder(
+               builder:(context)=> MaterialButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                  color: Colors.black,
+                  onPressed: () async {
+                    if (_globalKey.currentState.validate()) {
+                      try{
+                      _globalKey.currentState.save();
+                      print(_email);
+                      print(_password);
+                      final authResult = await _auth.signIn(_email, _password);
+                      print(authResult.user.uid);}
+                      catch(e){
+                         ScaffoldMessenger.of(context).showSnackBar(SnackBar
+                          (
+                            content: Text(e.message)
+                          ));
+                      }
+                    }
+                  },
+                  child: Text('Login', style: TextStyle(color: Colors.white)),
+                ),
               ),
             ),
             SizedBox(height: height * .05),
@@ -61,7 +91,7 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Don\'t have an Account ?',
+                  'Don\'t have an Account ? ',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16.0,
@@ -81,6 +111,7 @@ class LoginScreen extends StatelessWidget {
             )
           ],
         ),
-        );
+      ),
+    );
   }
 }
