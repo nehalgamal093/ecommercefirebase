@@ -2,6 +2,7 @@ import 'package:ecommercefirebase/provider/adminMode.dart';
 import 'package:ecommercefirebase/provider/modelHud.dart';
 import 'package:ecommercefirebase/screens/addProduct.dart';
 import 'package:ecommercefirebase/screens/admin_home.dart';
+import 'package:ecommercefirebase/screens/editProduct.dart';
 import 'package:ecommercefirebase/screens/home.dart';
 import 'package:ecommercefirebase/screens/login_screen.dart';
 import 'package:ecommercefirebase/screens/signup_screen.dart';
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
             SignupScreen.id:(context)=> SignupScreen(),
             HomePage.id:(context)=> HomePage(),
             AdminHome.id:(context)=>AdminHome(),
-            AddProduct.id:(context)=>AddProduct()
+            AddProduct.id:(context)=>AddProduct(),
+            EditProduct.id:(context)=>EditProduct()
           }
        
       ),

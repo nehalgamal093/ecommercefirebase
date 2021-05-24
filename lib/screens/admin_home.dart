@@ -1,4 +1,5 @@
 import 'package:ecommercefirebase/screens/addProduct.dart';
+import 'package:ecommercefirebase/screens/editProduct.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -21,7 +22,9 @@ class AdminHome extends StatelessWidget {
                   Navigator.pushNamed(context, AddProduct.id);
                 },
                 child: Text('Add Product')),
-            MaterialButton(onPressed: () {}, child: Text('Edit Product')),
+            MaterialButton(onPressed: () {
+              Navigator.pushNamed(context, EditProduct.id);
+            }, child: Text('Edit Product')),
             MaterialButton(onPressed: () {}, child: Text('View orders')),
           ],
         ));
