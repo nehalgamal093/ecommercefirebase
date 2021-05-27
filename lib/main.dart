@@ -3,11 +3,13 @@ import 'package:ecommercefirebase/provider/modelHud.dart';
 import 'package:ecommercefirebase/screens/addProduct.dart';
 import 'package:ecommercefirebase/screens/admin_home.dart';
 import 'package:ecommercefirebase/screens/editProduct.dart';
-import 'package:ecommercefirebase/screens/home.dart';
 import 'package:ecommercefirebase/screens/login_screen.dart';
+import 'package:ecommercefirebase/screens/manageProduct.dart';
+import 'package:ecommercefirebase/screens/home.dart';
 import 'package:ecommercefirebase/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 
 main()=>runApp(MyApp());
 
@@ -27,8 +29,11 @@ class MyApp extends StatelessWidget {
             HomePage.id:(context)=> HomePage(),
             AdminHome.id:(context)=>AdminHome(),
             AddProduct.id:(context)=>AddProduct(),
+            ManageProducts.id:(context)=>ManageProducts(),
             EditProduct.id:(context)=>EditProduct()
-          }
+            
+          },
+          debugShowCheckedModeBanner: false,
        
       ),
     );

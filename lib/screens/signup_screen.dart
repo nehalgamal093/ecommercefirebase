@@ -84,7 +84,7 @@ class SignupScreen extends StatelessWidget {
                           print(_password);
                           try {
                             final authResult =
-                                await _auth.signUp(_email, _password);
+                                await _auth.signUp(_email.trim(), _password.trim());
                             modelHud.changeisLoading(false);
                             Navigator.pushNamed(context, LoginScreen.id);
                           } catch (e) {

@@ -8,3 +8,4 @@ const kProductCategory = 'productCategory';
 const kProductName = 'productName';
 const kProductPrice = 'productPrice';
 const kProductDescription = 'productDescription';
+const kOnActiveColor = Color(0xFFC1BDb8);
