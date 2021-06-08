@@ -9,3 +9,7 @@ const kProductName = 'productName';
 const kProductPrice = 'productPrice';
 const kProductDescription = 'productDescription';
 const kOnActiveColor = Color(0xFFC1BDb8);
+const kJackets = 'jackets';
+const kTrousers = 'trouser';
+const kTshirts = 'T-Shirts';
+const kShoes = 'shoes';

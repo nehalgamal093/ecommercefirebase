@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommercefirebase/constants.dart';
+import 'package:ecommercefirebase/functions/functions.dart';
 import 'package:ecommercefirebase/services/store.dart';
+import 'package:ecommercefirebase/widgets/productView.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommercefirebase/services/auth.dart';
@@ -20,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   FirebaseUser _loggedUser;
   int _tabBarIndex = 0;
   int _bottomBarIndex = 0;
+  List<Product> _products;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -33,8 +36,8 @@ class _HomePageState extends State<HomePage> {
                 fixedColor: kMainColor,
                 onTap: (value) {
                   setState(() {
-                   _bottomBarIndex = value;
-                    });
+                    _bottomBarIndex = value;
+                  });
                 },
                 items: [
                   BottomNavigationBarItem(
@@ -89,7 +92,7 @@ class _HomePageState extends State<HomePage> {
               body: TabBarView(
                 children: [
                   jacketView(),
-                  Text('Text2'),
+                  productView(kTrousers,_products),
                   Text('Text3'),
                   Text('Text4'),
                 ],
@@ -134,6 +137,7 @@ class _HomePageState extends State<HomePage> {
             List<Product> products = [];
             for (var doc in snapshot.data.documents) {
               var data = doc.data;
+
               products.add(Product(
                   pId: doc.documentID,
                   pPrice: data[kProductPrice],
@@ -142,6 +146,9 @@ class _HomePageState extends State<HomePage> {
                   pLocation: data[kProductLocation],
                   pCategory: data[kProductCategory]));
             }
+            _products = [...products];
+            products.clear();
+            products = getProductByCategory(kJackets, _products);
             return GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -197,4 +204,8 @@ class _HomePageState extends State<HomePage> {
           }
         });
   }
+
+ 
+
+
 }
