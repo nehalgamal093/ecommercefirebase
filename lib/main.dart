@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
     return FutureBuilder<SharedPreferences>(
         future: SharedPreferences.getInstance(),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
+          if (!snapshot.hasData) {
             return MaterialApp(
               home: Scaffold(
                   body: Center(
