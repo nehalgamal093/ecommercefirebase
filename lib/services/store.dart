@@ -20,6 +20,13 @@ class Store {
     return _firestore.collection(kProductCollection).snapshots();
   }
 
+  Stream<QuerySnapshot> loadOrders() {
+    return _firestore.collection(kOrders).snapshots();
+  }
+   Stream<QuerySnapshot> orderDetails(documentId) {
+    return _firestore.collection(kOrders).document(documentId).collection(kOrdersDetails).snapshots();
+  }
+
   deleteProduct(documentId) {
     _firestore.collection(kProductCollection).document(documentId).delete();
   }
@@ -29,5 +36,19 @@ class Store {
         .collection(kProductCollection)
         .document(documentId)
         .updateData(data);
+  }
+
+  storeOrders(data, List<Product> products) {
+    var documentRef = _firestore.collection(kOrders).document();
+    for (var product in products) {
+      documentRef.setData(data);
+      documentRef.collection(kOrdersDetails).document().setData({
+        kProductName: product.pName,
+        kProductPrice: product.pPrice,
+        kProductQuanity: product.pQuantity,
+        kProductLocation: product.pLocation,
+        kProductCategory:product.pCategory
+      });
+    }
   }
 }

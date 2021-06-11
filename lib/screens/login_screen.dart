@@ -8,14 +8,28 @@ import 'package:ecommercefirebase/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'admin_home.dart';
 import 'home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   static String id = 'LoginScreen';
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   String _email, _password;
+
   final _auth = Auth();
+
   final adminPassword = '123456';
+
+  bool keepMeLoggedIn = false;
+
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
+
   bool isAdmin = false;
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -23,7 +37,7 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: kMainColor,
       body: Form(
-        key: _globalKey,
+        key:_globalKey,
         child: ListView(
           children: <Widget>[
             Padding(
@@ -56,7 +70,29 @@ class LoginScreen extends StatelessWidget {
               hint: 'Enter your email',
               icon: Icons.email,
             ),
-            SizedBox(height: height * .02),
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Row(
+                children: [
+                  Theme(
+                    data: ThemeData(unselectedWidgetColor: Colors.white),
+                    child: Checkbox(
+                        checkColor: KSecondaryColor,
+                        activeColor: kMainColor,
+                        value: keepMeLoggedIn,
+                        onChanged: (value) {
+                          setState(() {
+                            keepMeLoggedIn = value;
+                          });
+                        }),
+                  ),
+                  Text(
+                    'Remember Me',
+                    style: TextStyle(color: Colors.white),
+                  )
+                ],
+              ),
+            ),
             CustomTextField(
               onClick: (value) {
                 _password = value;
@@ -72,7 +108,10 @@ class LoginScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0)),
                   color: Colors.black,
-                  onPressed: ()  {
+                  onPressed: () {
+                    if (keepMeLoggedIn == true) {
+                      keepUserLoggedIn();
+                    }
                     _validate(context);
                   },
                   child: Text('Login', style: TextStyle(color: Colors.white)),
@@ -142,7 +181,7 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  void _validate(BuildContext context) async{
+  void _validate(BuildContext context) async {
     final modelHud = Provider.of<ModelHud>(context, listen: false);
     modelHud.changeisLoading(true);
     if (_globalKey.currentState.validate()) {
@@ -150,22 +189,22 @@ class LoginScreen extends StatelessWidget {
       if (Provider.of<AdminMode>(context, listen: false).isAdmin) {
         if (_password == adminPassword) {
           try {
-           await _auth.signIn(_email, _password);
+            await _auth.signIn(_email, _password);
             Navigator.pushNamed(context, AdminHome.id);
           } catch (e) {
             modelHud.changeisLoading(false);
-            
+
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(e.message)));
           }
         } else {
-           modelHud.changeisLoading(false);
+          modelHud.changeisLoading(false);
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text('Something went wrong')));
         }
       } else {
         try {
-         await _auth.signIn(_email, _password);
+          await _auth.signIn(_email, _password);
           Navigator.pushNamed(context, HomePage.id);
         } catch (e) {
           ScaffoldMessenger.of(context)
@@ -174,5 +213,10 @@ class LoginScreen extends StatelessWidget {
       }
     }
     modelHud.changeisLoading(false);
+  }
+
+  void keepUserLoggedIn() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setBool(kKeepMeLoggedIn, keepMeLoggedIn);
   }
 }

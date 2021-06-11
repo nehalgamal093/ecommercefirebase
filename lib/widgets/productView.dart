@@ -1,6 +1,7 @@
 import 'package:ecommercefirebase/functions/functions.dart';
 import 'package:ecommercefirebase/screens/models/product.dart';
 import 'package:flutter/material.dart';
+import'package:ecommercefirebase/screens/productInfo.dart';
 
 Widget productView(String pCategory,List<Product>allProducts) {
   List<Product> products;
@@ -15,6 +16,9 @@ Widget productView(String pCategory,List<Product>allProducts) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10.0),
           child: GestureDetector(
+            onTap:(){
+              Navigator.pushNamed(context, ProductInfo.id,arguments: products[index]);
+            },
             child: Stack(
               children: [
                 Positioned.fill(

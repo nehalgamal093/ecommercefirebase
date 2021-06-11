@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommercefirebase/screens/editProduct.dart';
+import 'package:ecommercefirebase/widgets/custom_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommercefirebase/services/store.dart';
 import 'models/product.dart';
@@ -114,21 +115,5 @@ class _EditProductState extends State<ManageProducts> {
   }
 }
 
-class MyPopupMenuItem<T> extends PopupMenuItem<T> {
-  final Widget child;
-  final Function onClick;
-  MyPopupMenuItem({@required this.child, @required this.onClick})
-      : super(child: child);
-  @override
-  PopupMenuItemState<T, PopupMenuItem<T>> createState() {
-    return MyPopupMenuItemState();
-  }
-}
 
-class MyPopupMenuItemState<T, PopMenuItem>
-    extends PopupMenuItemState<T, MyPopupMenuItem<T>> {
-  @override
-  void handleTap() {
-    widget.onClick();
-  }
-}
+

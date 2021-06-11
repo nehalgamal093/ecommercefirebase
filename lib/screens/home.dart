@@ -1,12 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommercefirebase/constants.dart';
 import 'package:ecommercefirebase/functions/functions.dart';
+import 'package:ecommercefirebase/screens/login_screen.dart';
+import 'package:ecommercefirebase/screens/productInfo.dart';
 import 'package:ecommercefirebase/services/store.dart';
 import 'package:ecommercefirebase/widgets/productView.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommercefirebase/services/auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'cartScreen.dart';
 import 'models/product.dart';
 
 class HomePage extends StatefulWidget {
@@ -35,7 +39,14 @@ class _HomePageState extends State<HomePage> {
                 currentIndex: _bottomBarIndex,
                 fixedColor: kMainColor,
                 onTap: (value) {
-                  setState(() {
+                  setState(() async {
+                    if (value == 2) {
+                      SharedPreferences pref =
+                          await SharedPreferences.getInstance();
+                      pref.clear();
+                      await _auth.SignOut();
+                      Navigator.popAndPushNamed(context, LoginScreen.id);
+                    }
                     _bottomBarIndex = value;
                   });
                 },
@@ -45,9 +56,7 @@ class _HomePageState extends State<HomePage> {
                   BottomNavigationBarItem(
                       icon: Icon(Icons.person), label: 'Person'),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.person), label: 'Person'),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.person), label: 'Person'),
+                      icon: Icon(Icons.close), label: 'Sign Out'),
                 ],
               ),
               appBar: AppBar(
@@ -92,8 +101,8 @@ class _HomePageState extends State<HomePage> {
               body: TabBarView(
                 children: [
                   jacketView(),
-                  productView(kTrousers,_products),
-                  Text('Text3'),
+                  productView(kTrousers, _products),
+                  productView(kTshirts, _products),
                   Text('Text4'),
                 ],
               )),
@@ -110,7 +119,11 @@ class _HomePageState extends State<HomePage> {
                     'Discover'.toUpperCase(),
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  Icon(Icons.shopping_cart)
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, CartScreen.id);
+                      },
+                      child: Icon(Icons.shopping_cart))
                 ],
               ),
             ),
@@ -160,6 +173,10 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10, vertical: 10.0),
                     child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, ProductInfo.id,
+                            arguments: products[index]);
+                      },
                       child: Stack(
                         children: [
                           Positioned.fill(
@@ -204,8 +221,4 @@ class _HomePageState extends State<HomePage> {
           }
         });
   }
-
- 
-
-
 }
