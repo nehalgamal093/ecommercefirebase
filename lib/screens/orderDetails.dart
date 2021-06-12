@@ -2,8 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommercefirebase/constants.dart';
 import 'package:ecommercefirebase/services/store.dart';
 import 'package:flutter/material.dart';
-
-import 'models/product.dart';
+import 'package:ecommercefirebase/models/product.dart';
 
 class OrderDetails extends StatelessWidget {
   static String id = 'OrderDetails';

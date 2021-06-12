@@ -1,5 +1,5 @@
-import 'package:ecommercefirebase/screens/models/product.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:ecommercefirebase/models/product.dart';
 
 class CartItem extends ChangeNotifier {
   List<Product> products = [];

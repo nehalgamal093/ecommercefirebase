@@ -1,8 +1,7 @@
 import 'package:ecommercefirebase/constants.dart';
 import 'package:ecommercefirebase/provider/cartItem.dart';
 import 'package:ecommercefirebase/screens/cartScreen.dart';
-import 'package:ecommercefirebase/screens/models/product.dart';
-import 'package:flutter/gestures.dart';
+import 'package:ecommercefirebase/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

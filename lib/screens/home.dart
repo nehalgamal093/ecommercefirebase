@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommercefirebase/constants.dart';
 import 'package:ecommercefirebase/functions/functions.dart';
+import 'package:ecommercefirebase/models/product.dart';
 import 'package:ecommercefirebase/screens/login_screen.dart';
 import 'package:ecommercefirebase/screens/productInfo.dart';
 import 'package:ecommercefirebase/services/store.dart';
@@ -11,7 +12,7 @@ import 'package:ecommercefirebase/services/auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'cartScreen.dart';
-import 'models/product.dart';
+
 
 class HomePage extends StatefulWidget {
   static String id = 'HomePage';

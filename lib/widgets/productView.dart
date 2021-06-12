@@ -1,5 +1,5 @@
 import 'package:ecommercefirebase/functions/functions.dart';
-import 'package:ecommercefirebase/screens/models/product.dart';
+import 'package:ecommercefirebase/models/product.dart';
 import 'package:flutter/material.dart';
 import'package:ecommercefirebase/screens/productInfo.dart';
 

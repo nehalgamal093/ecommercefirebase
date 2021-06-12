@@ -3,8 +3,7 @@ import 'package:ecommercefirebase/constants.dart';
 import 'package:ecommercefirebase/screens/orderDetails.dart';
 import 'package:ecommercefirebase/services/store.dart';
 import 'package:flutter/material.dart';
-
-import 'models/order.dart';
+import 'package:ecommercefirebase/models/order.dart';
 
 class OrderScreen extends StatelessWidget {
   static String id = 'OrderScreen';

@@ -5,7 +5,7 @@ import 'package:ecommercefirebase/services/store.dart';
 import 'package:ecommercefirebase/widgets/custom_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'models/product.dart';
+import 'package:ecommercefirebase/models/product.dart';
 
 class CartScreen extends StatelessWidget {
   static String id = 'CartScreen';

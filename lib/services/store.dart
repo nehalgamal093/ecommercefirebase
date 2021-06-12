@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommercefirebase/constants.dart';
-import 'package:ecommercefirebase/screens/addProduct.dart';
-import 'package:ecommercefirebase/services/store.dart';
-import '../screens/models/product.dart';
+import 'package:ecommercefirebase/models/product.dart';
+
 
 class Store {
   final Firestore _firestore = Firestore.instance;
